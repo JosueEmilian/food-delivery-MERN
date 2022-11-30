@@ -2,10 +2,13 @@ import React, {useState, useEffect} from "react";
 import { MuestraCarritoProductos } from "./MuestraCarritoProductos";
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import { useDispatch } from "react-redux";
+import { agregaCarrito } from "../stores/carrito/carSlice";
 
 
 export const MuestraProductos = () => {
     const [productos, setProductos] = useState([]);
+    const dispatch = useDispatch();
 
     const responsive = {
         superLargeDesktop: {
@@ -35,7 +38,7 @@ export const MuestraProductos = () => {
     }, [])
 
     const onAddProduct = (producto) => {
-      console.log(producto)
+      dispatch(agregaCarrito(producto))
     }
     return (
         <div className="container mx-auto pb-4 w-2/3 text-white bg-black">

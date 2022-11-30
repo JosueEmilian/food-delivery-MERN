@@ -3,7 +3,7 @@ import { AgregaProductos } from "./AgregaProductos";
 export const MuestraCarritoProductos = ({producto, onAddProduct}) => {
 
     const addProduct = () => {
-        //Para agregar al carrito --> Pendiente, despues de configurar Redux
+        onAddProduct(producto)
     }
     return (
         <div className="w-ful p-4 m-2 rounded text-white bg-gradient-to-b from-slate-600 to-transparent text-center">
