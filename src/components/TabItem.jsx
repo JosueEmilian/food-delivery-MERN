@@ -1,15 +1,13 @@
 export const TabItem = ({title, index, active, setActive}) => {
-    const className = active ? 'border-b-yellow-400' : 'border-none text-slate-400';
+    const className = active ? 'border-orange-600 text-orange-600' : 'border-none text-slate-400';
 
     return (
         <div className="nav-item px-2">
-            <a href={`{#{title}}`}>
-                <button onClick={() => setActive(title)} className="pt-7 pb-3">
-                    <span className={`hover:text-yellow transition-colors border-b-2 ${className}`}>
-                        {title.toUpperCase()}
-                    </span>
-                </button>
-            </a>
+            <button onClick={() => setActive(title)} className="pt-7 pb-3">
+                <span className={`hover:text-yellow transition-colors border-b-2 ${className}`}>
+                    {title.toUpperCase()}
+                </span>
+            </button>
         </div>
     )
 }
