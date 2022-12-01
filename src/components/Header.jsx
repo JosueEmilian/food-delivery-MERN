@@ -1,8 +1,39 @@
 import foody from "../assets/images/logo-restaurant.png";
 import iconCarrito from "../assets/icons/new-cart.svg";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import Button from "./elements/Button";
+import { useEffect, useState } from "react";
 
 export const Header = ({cartCount}) => {
+    const navigate = useNavigate();
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    const handleLogout = () => {
+        sessionStorage.removeItem('Auth token');
+        sessionStorage.removeItem('User Id');
+        window.dispatchEvent(new Event("Storage"))
+
+        navigate("/");
+    }
+
+    useEffect(() => {
+        const checkAuthToken = () => {
+            const token = sessionStorage.getItem('Auth token');
+            if(token){
+                setIsLoggedIn(true);
+            }else{
+                setIsLoggedIn(false);
+            }
+        }
+
+        window.addEventListener('storage', checkAuthToken);
+
+        return () => {
+            window.removeEventListener('storage', checkAuthToken);
+        }
+    }, [])
+
     return(
         <nav id="header" className="bg-stone-900 text-white">
             <div className="w-full container mx-auto flex flex-wrap items-center justify-between mt-0 py-2">
@@ -20,8 +51,16 @@ export const Header = ({cartCount}) => {
                         <img src={iconCarrito} alt="icon" />
                         {cartCount > 0 ? <div className="rounded-full bg-entorno text-white inline-flex justify-center items-center w-full absolute -top-1 -right-1 ">{cartCount}</div> : null}
                     </Link>
-                    <Link to="/login">Inicio Sesion</Link>
-                    <Link to="/registrarse">Registrarse</Link>
+                    {
+                        isLoggedIn ?
+                        <Button onClick={handleLogout}>Cerrar Sesion</Button> :
+                        (
+                            <>
+                            <Link to="/login">Inicio Sesion</Link>
+                            <Link to="/registrarse">Registrarse</Link>
+                            </>
+                        )
+                    }
                 </div>
             </div>
         </nav>

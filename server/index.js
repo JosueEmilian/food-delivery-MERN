@@ -6,6 +6,8 @@ const db = require('./db');
 
 const app = express();
 const productoRouter = require('./routes/productoRouter');
+const userRouter = require('./routes/productoRouter');
+
 
 //variables de acceso
 const env = require('dotenv').config({path: '../.env'});
@@ -94,7 +96,10 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`El servidor se esta ejecutando en el puerto ${PORT}`);
 });
+
 app.use('/api/', productoRouter);
+app.use('/api/', userRouter);
+
 
 app.post('/create-payment-intent', async(req, res) => {
     try {
